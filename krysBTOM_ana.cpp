@@ -43,7 +43,7 @@ using namespace std;
 
 // booleans for histogram and canvas activation (true) or deactivation (false)
 
-	bool b_DESY22 = false; // DESY22, ADD BOOLEAN!
+	//bool b_DESY22 = false; // DESY22, ADD BOOLEAN!
 
 	bool b_plotLastSpill = true; // general switch for last-spill histograms (creation & drawing in canvases - dedicated tree is not even created)
 	bool b_outTracking = false; // general switch for output tracking (controls all the calculations and plots that make use of the output tracking layers)
@@ -797,7 +797,7 @@ void krysBTOM_ana(){ // this partakes everything that should go in the main (whi
 
 	cond = Form("%s&&%s&&%s&&%s&&%s", b_xRawBaseTrackErrors.c_str(), b_singleHitIn.c_str(), b_inAligned.c_str(), b_inCry.c_str(), b_thOutLim.c_str()); // set total boolean
 
-	// if(b_outTracking&&b_h2_iStep_thDelta){
+	/*// if(b_outTracking&&b_h2_iStep_thDelta){
 	if(b_DESY22){ // DESY22, ADD BOOLEAN!
 		histName = Form("h2_iStep_nHitOut");
 		tree->Draw(Form("%s:%s>>%s(,,,%d)", varNameY.c_str(), varNameX.c_str(), histName.c_str(), nBinsY), cond.c_str(), "goff");
@@ -817,7 +817,7 @@ cout << "ciao5-" << iOut[0] << endl;
 		tpTemp->GetXaxis()->SetTitle("scan step nr.");
 		tpTemp->GetYaxis()->SetTitle("nr. of hits");
 		tpTemp->Write();
-	}
+	}*/
 
 	// - vs. goniometer DOFs
 	cond = Form("%s&&%s&&%s&&%s&&%s&&%s", b_xRawBaseTrackErrors.c_str(), b_singleHitIn.c_str(), b_singleHitOut.c_str(), b_inAligned.c_str(), b_inCry.c_str(), b_thOutLim.c_str()); // set total boolean
@@ -827,7 +827,7 @@ cout << "ciao5-" << iOut[0] << endl;
 		
 		nBinsX = nBinsX_xGonio_thDelta;
 		
-		// if(b_outTracking&&b_h2_xGonio_thDelta){
+		/*// if(b_outTracking&&b_h2_xGonio_thDelta){
 		if(b_DESY22){ // DESY22, ADD BOOLEAN!
 			histName = Form("h2_xGonio%d_nHitOut", i);
 			tree->Draw(Form("%s:%s>>%s(%d,,,%d)", varNameY.c_str(), varNameX.c_str(), histName.c_str(), nBinsX, nBinsY), cond.c_str(), "goff");
@@ -844,7 +844,7 @@ cout << "ciao5-" << iOut[0] << endl;
 			tpTemp->GetXaxis()->SetTitle("goniometer DOF");
 			tpTemp->GetYaxis()->SetTitle("nr. of hits");
 			tpTemp->Write();
-		}
+		}*/
 	}
 
 	// histograms, correlations of deflections
@@ -1436,7 +1436,7 @@ cout << "ciao5-" << iOut[0] << endl;
 	// canvases w/ 2D plots
 	gStyle->SetOptStat(optStat2D);
 	
-	// canvas, goniometer correlations of output multiplicity (1st one)
+	/*// canvas, goniometer correlations of output multiplicity (1st one)
 	// if(b_outTracking&&(b_h2_iStep_thDelta||b_h2_xGonio_thDelta)){
 	if(b_DESY22){ // DESY22, ADD BOOLEAN!
 		canvasName = Form("c_xGonio_nHitOut");
@@ -1491,7 +1491,7 @@ cout << "ciao5-" << iOut[0] << endl;
 		canvas->Draw();
 		canvas->SaveAs(Form("%s%s.pdf", outPdfPath.c_str(), canvasName.c_str()));
 		canvas->Write();
-	}
+	}*/
 
 	// canvas, goniometer correlations of deflections
 	if(b_outTracking&&(b_h2_iStep_thDelta||b_h2_xGonio_thDelta)){
