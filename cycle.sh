@@ -106,4 +106,3 @@ source talkToServer.sh $TOSERVER $SYNCBACKSERVER $SERVERPATH
 
 echo "done! now waiting for new data..."
 echo "-----"
-

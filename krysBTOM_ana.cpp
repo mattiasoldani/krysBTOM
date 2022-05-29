@@ -43,8 +43,10 @@ using namespace std;
 
 // booleans for histogram and canvas activation (true) or deactivation (false)
 
-	bool b_plotLastSpill = false; // general switch for last-spill histograms (creation & drawing in canvases - dedicated tree is not even created)
-	bool b_outTracking = true; // general switch for output tracking (controls all the calculations and plots that make use of the output tracking layers)
+	bool b_DESY22 = false; // DESY22, ADD BOOLEAN!
+
+	bool b_plotLastSpill = true; // general switch for last-spill histograms (creation & drawing in canvases - dedicated tree is not even created)
+	bool b_outTracking = false; // general switch for output tracking (controls all the calculations and plots that make use of the output tracking layers)
 
 	bool b_h1_nHit = true; // multiplicities 1D
 	bool b_h1_xRaw = true; // beam profiles 1D
@@ -53,14 +55,14 @@ using namespace std;
 	bool b_h1_thDelta = false; // deflection angles 1D
 	bool b_h1_time_noCuts = true; // digitizer times 1D, with no cuts
 	bool b_h1_ph_noCuts = true; // digitizer PHs 1D, with no cuts
-	bool b_h1_phEq_noCuts = true; // digitizer PHs 1D, equalised, with no cuts
+	bool b_h1_phEq_noCuts = false; // digitizer PHs 1D, equalised, with no cuts
 	bool b_h1_phEq_counters = true; // digitizer PHs 1D, equalised, only multiplicity counters
 		// also check the boolean on the actual availability of these data below
 	bool b_h1_phEq_fwdCalo = true; // digitizer PHs 1D, equalised, only forward calorimeter (single channels)
 		// also check the boolean on the actual availability of these data below
-	bool b_h1_phEq_latCalo = true; // digitizer PHs 1D, equalised, only lateral calorimeter (single channels)
+	bool b_h1_phEq_latCalo = false; // digitizer PHs 1D, equalised, only lateral calorimeter (single channels)
 		// also check the boolean on the actual availability of these data below
-	bool b_h1_phEq_cry = true; // digitizer PHs 1D, equalised, only read-out crystal
+	bool b_h1_phEq_cry = false; // digitizer PHs 1D, equalised, only read-out crystal
 		// also check the boolean on the actual availability of these data below
 	bool b_h1_phTot_fwdCalo = true;  // forward calorimeter total PH 1D
 		// also check the boolean on the actual availability of these data below
@@ -96,8 +98,8 @@ using namespace std;
 	int nBinsX_xCry_thDelta = 200; // nr. of horizontal bins in deflection angle vs. input positions @ crystal plots
 	int nBinsX_thIn_thDelta = 100; // nr. of horizontal bins in deflection angle vs. input angles plots
 
-	double r_xCryMin = -0.5; // lower range for crystal spot plots, both hor. & ver.
-	double r_xCryMax = 2.5; // upper range for crystal spot plots, both hor. & ver.
+	double r_xCryMin = -1.0; // lower range for crystal spot plots, both hor. & ver.
+	double r_xCryMax = 3.0; // upper range for crystal spot plots, both hor. & ver.
 	double r_thOut = 1000.0; // range for output angle plots; 
 		// note: also used for output & deflection angle cut definition
 		// note: also used for deflection angle range
@@ -105,14 +107,14 @@ using namespace std;
 	double cut_xCryXMax = 10.0; // crystal fiducial area boundaries, max. x
 	double cut_xCryYMin = -10.0; // crystal fiducial area boundaries, min. y
 	double cut_xCryYMax = 10.0; // crystal fiducial area boundaries, max. y
-	double cut_thIn = 1000.0; // cut on input angles
+	double cut_thIn = 10000.0; // cut on input angles
 	double thInCutMultForOut = 1.0; // factor used for inverse cut on deflection angle for crystal surface identification (multiplied by thInCutMultForOut)
 	
 	int nBins_time = 128; // nr. of bins in digi. time plots
 	int nBins_ph = 1024; // nr. of bins on PH plots
 	
 	double r_timeMax = 512.0; // upper range for digi. time plots
-	double r_phMax = 4096.0; // upper range for PH plots
+	double r_phMax = 16198.0; // upper range for PH plots
 	double cut_digiTimeMin[nDigi] = { // cuts on digi. time, lower value per channel
 		0., 0., 0., 0., 0., 0., 0., 0., 
 		0., 0., 0., 0., 0., 0., 0., 0.
@@ -157,7 +159,7 @@ using namespace std;
 // settings on setup & other data conditioning parameters
 
 	int iIn[4] = {0, 1, 2, 3}; // indexes of input tracking layers, always 4 entries: x0, y0, x1, y1
-	double zIn[4] = {0, 0, 41.0, 41.0}; // z of input tracking layers, always 4 entries: x0, y0, x1, y1
+	double zIn[4] = {0, 0, 78.9, 78.9}; // z of input tracking layers, always 4 entries: x0, y0, x1, y1
 	/*// bent TEST values:
 	int iIn[4] = {0, 1, 2, 3}; // indexes of input tracking layers, always 4 entries: x0, y0, x1, y1
 	double zIn[4] = {0, 0, 500.0, 500.0}; // z of input tracking layers, always 4 entries: x0, y0, x1, y1
@@ -170,7 +172,7 @@ using namespace std;
 	bool bThOutFromCry = true; // if true (false) output angle is computed w/ (w/o) input projection @ crystal
 		// note: it is subject to b_outTracking
 		// note: if no output angle analysis is needed, set bThOutFromCry to false and 4 dummy entries in zOut & iOut
-	double zCry = 63.75; // z of crystal centre
+	double zCry = 78.9+2.25+24.0; // z of crystal centre
 	/*// bent TEST values:
 	bool bThOutFromCry = false; // if true (false) output angle is computed w/ (w/o) input projection @ crystal
 		// note: it is subject to b_outTracking
@@ -188,7 +190,7 @@ using namespace std;
 		4, 5
 	}; // indexes of output tracking layers, any even nr. of entries: x0, y0, ...
 	double zOut[6] = {
-		106.65, 106.65
+		78.9+100.15, 78.9+100.15
 	}; // z of output tracking layers, any even nr. of entries: x0, y0, ...
 		// note: it is subject to b_outTracking
 		// note: if bThOutFromCry layers 0 & 1 are used with projections @ crystal, otherwise layers 0, 1, 2 & 3 are used
@@ -212,7 +214,7 @@ using namespace std;
 	}; // z of output tracking layers, any even nr. of entries: x0, y0, ...
 	*/
 
-	double thInCentres[2] = {-5561.16, -4270.23}; // centres of the raw input angle distributions (in urad)
+	double thInCentres[2] = {-1792.0, 5749.0}; // centres of the raw input angle distributions (in urad)
 	double thOutCentres[2] = {0.0, 0.0}; // centres of the raw input angle distributions (in urad)
 	/*// bent TEST values:
 	double thInCentres[2] = {-837.3, -306.1}; // centres of the raw input angle distributions (in urad)
@@ -236,8 +238,8 @@ using namespace std;
 	// the order is the same as in the raw data, nothing to do with the lists of digitizer sets of channels
 	// there must be exactly nDigi entries, if in doubt insert ones
 	double digiEq[nDigi] = {
-		1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1
+		1, 1, 0.461320, 0.618319, 0.580172, 0.559943, 1, 0.882152,
+		0.553153, 1.063839, 1, 1, 1, 1, 1, 1
 	};
 	/*// bent TEST values:
 	double digiEq[nDigi] = {};
@@ -269,8 +271,8 @@ using namespace std;
 	*/
 	
 	// lists of digitizer sets of channels (order matters for plotting)
-	vector<int> ls_counters = {11, 12}; // all the multiplicity counters & vetoes
-	vector<int> ls_fwdCalo = {0, 1, 2, 3, 4, 5, 6, 7, 8}; // forward calorimeter
+	vector<int> ls_counters = {0, 1}; // all the multiplicity counters & vetoes
+	vector<int> ls_fwdCalo = {2, 3, 4, 5, 6, 7, 8, 9, 10}; // forward calorimeter
 	vector<int> ls_latCalo = {}; // lateral calorimeter
 	vector<int> ls_cry = {}; // crystal, if read out
 	// bent TEST values: whatever
@@ -445,7 +447,7 @@ void krysBTOM_ana(){ // this partakes everything that should go in the main (whi
 	gErrorIgnoreLevel = kWarning;
 
 // data structure to be used in trees
-	string treeStructure = Form("epoch/I:iEv/I:xRaw[%d]/D:nHit[%d]/I:xGonioRaw[%d]/D:iSpill/I:iStep/I:digiBase[%d]/I:digiPH[%d]/I:digiTime[%d]/I", nSi, nSi, nGonio, nDigi, nDigi, nDigi);
+	string treeStructure = Form("xRaw[%d]/D:nStrHit[%d]/I:nHit[%d]/I:digiBase[%d]/I:digiPH[%d]/I:digiTime[%d]/I:xGonioRaw[%d]/D:iSpill/I:iStep/I:iEv/I:xCharge[%d]/D", nSi, nSi, nSi, nDigi, nDigi, nDigi, nGonio, 4);
 	/*// bent TEST values:
 	string treeStructure = Form("nHit[%d]/I:xRaw[%d]/D:nStrHit[%d]/I:xGonioRaw[%d]/D:iSpill/I:iStep/I:iEv/I", nSi, nSi+4, nSi+4, nGonio);
 	*/
@@ -785,6 +787,66 @@ void krysBTOM_ana(){ // this partakes everything that should go in the main (whi
 		}
 	}
 	
+	// histograms, correlations of output multiplicity (1st one)
+	nBinsY = nBins_nHit; // range settings
+	
+	varNameY = Form("nHit[%d]", iOut[0]);
+	
+	// - vs. iStep	
+	varNameX = Form("iStep");
+
+	cond = Form("%s&&%s&&%s&&%s&&%s", b_xRawBaseTrackErrors.c_str(), b_singleHitIn.c_str(), b_inAligned.c_str(), b_inCry.c_str(), b_thOutLim.c_str()); // set total boolean
+
+	// if(b_outTracking&&b_h2_iStep_thDelta){
+	if(b_DESY22){ // DESY22, ADD BOOLEAN!
+		histName = Form("h2_iStep_nHitOut");
+		tree->Draw(Form("%s:%s>>%s(,,,%d)", varNameY.c_str(), varNameX.c_str(), histName.c_str(), nBinsY), cond.c_str(), "goff");
+cout << "ciao2-" << iOut[0] << endl;
+		h2Temp = (TH2F*)gDirectory->Get(histName.c_str());
+cout << "ciao3-" << iOut[0] << endl;
+		h2Temp->SetTitle(Form("vs. scan step"));
+		h2Temp->GetXaxis()->SetTitle("scan step nr.");
+		h2Temp->GetYaxis()->SetTitle("nr. of hits");
+		h2Temp->Write();
+cout << "ciao5-" << iOut[0] << endl;
+		
+		histName = Form("tp_iStep_nHitOut");
+		tree->Draw(Form("%s:%s>>%s", varNameY.c_str(), varNameX.c_str(), histName.c_str()), cond.c_str(), "goff,profs");
+		tpTemp = (TProfile*)gDirectory->Get(histName.c_str());
+		tpTemp->SetTitle(Form("output multiplicity (1st one) vs. scan step"));
+		tpTemp->GetXaxis()->SetTitle("scan step nr.");
+		tpTemp->GetYaxis()->SetTitle("nr. of hits");
+		tpTemp->Write();
+	}
+
+	// - vs. goniometer DOFs
+	cond = Form("%s&&%s&&%s&&%s&&%s&&%s", b_xRawBaseTrackErrors.c_str(), b_singleHitIn.c_str(), b_singleHitOut.c_str(), b_inAligned.c_str(), b_inCry.c_str(), b_thOutLim.c_str()); // set total boolean
+
+	for(int i=0; i<nGonio; i++){
+		varNameX = Form("xGonio%d", i);
+		
+		nBinsX = nBinsX_xGonio_thDelta;
+		
+		// if(b_outTracking&&b_h2_xGonio_thDelta){
+		if(b_DESY22){ // DESY22, ADD BOOLEAN!
+			histName = Form("h2_xGonio%d_nHitOut", i);
+			tree->Draw(Form("%s:%s>>%s(%d,,,%d)", varNameY.c_str(), varNameX.c_str(), histName.c_str(), nBinsX, nBinsY), cond.c_str(), "goff");
+			h2Temp = (TH2F*)gDirectory->Get(histName.c_str());
+			h2Temp->SetTitle(Form("output multiplicity (1st one) vs. goniometer DOF %d", i));
+			h2Temp->GetXaxis()->SetTitle("goniometer DOF");
+			h2Temp->GetYaxis()->SetTitle("nr. of hits");
+			h2Temp->Write();
+		
+			histName = Form("tp_xGonio%d_nHitOut", i);
+			tree->Draw(Form("%s:%s>>%s(%d)", varNameY.c_str(), varNameX.c_str(), histName.c_str(), nBinsX), cond.c_str(), "goff,profs");
+			tpTemp = (TProfile*)gDirectory->Get(histName.c_str());
+			tpTemp->SetTitle(Form("output multiplicity (1st one) vs. goniometer DOF %d", i));
+			tpTemp->GetXaxis()->SetTitle("goniometer DOF");
+			tpTemp->GetYaxis()->SetTitle("nr. of hits");
+			tpTemp->Write();
+		}
+	}
+
 	// histograms, correlations of deflections
 	nBinsY = nBins_thOut; // range settings
 
@@ -1158,7 +1220,7 @@ void krysBTOM_ana(){ // this partakes everything that should go in the main (whi
 		
 		nBins = nBins_ph;
 		
-		varName = Form("digiPH[0]");
+		varName = Form("PHCaloFwd");
 		histName = Form("h1_phTot_fwdCalo");
 
 		tree->Draw(Form("%s>>%s(%d, %f, %f)", varName.c_str(), histName.c_str(), nBins, 0., r_phMax), cond.c_str(), "goff");
@@ -1373,6 +1435,63 @@ void krysBTOM_ana(){ // this partakes everything that should go in the main (whi
 
 	// canvases w/ 2D plots
 	gStyle->SetOptStat(optStat2D);
+	
+	// canvas, goniometer correlations of output multiplicity (1st one)
+	// if(b_outTracking&&(b_h2_iStep_thDelta||b_h2_xGonio_thDelta)){
+	if(b_DESY22){ // DESY22, ADD BOOLEAN!
+		canvasName = Form("c_xGonio_nHitOut");
+		canvasTitle = Form("goniometer correlations of output multiplicity (1st one)");
+		canvas = new TCanvas(canvasName.c_str(), canvasTitle.c_str());
+		canvas->Divide(2, nGonio+1);
+
+		int k=0;
+		for(int i=0; i<nGonio+1; i++){
+			string dof;
+			string grVarName;
+			bool b_local;
+			if(i==0){
+				dof = Form("iStep");
+				grVarName = Form("scan step nr.");
+				// b_local = b_h2_iStep_thDelta;
+				b_local = b_DESY22; // DESY22, ADD BOOLEAN!
+			}
+			else {
+				dof = Form("xGonio%d", i-1);
+				grVarName = Form("goniometer DOF");
+				// b_local = b_h2_xGonio_thDelta;
+				b_local = b_DESY22; // DESY22, ADD BOOLEAN!
+			}
+
+			if(b_local){
+				h2TempOut[i] = (TH2F*)outHistFile->Get(Form("h2_%s_nHitOut", dof.c_str()));
+				tpTempOut[i] = (TProfile*)outHistFile->Get(Form("tp_%s_nHitOut", dof.c_str()));
+				tpTempOut[i]->SetLineColor(2);
+
+				canvas->cd(2*k+1);
+				h2TempOut[i]->Draw("COL");
+				tpTempOut[i]->Draw("L SAME");
+				
+				canvas->cd(2*k+2);
+				double xErr[tpTempOut[i]->GetNbinsX()], yErr[tpTempOut[i]->GetNbinsX()];
+				for(int j=0; j<tpTempOut[i]->GetNbinsX(); j++){
+					xErr[j] = h2TempOut[i]->GetXaxis()->GetBinCenter(j);
+					yErr[j] = abs(tpTempOut[i]->GetBinError(j));
+				}
+				grTempOut[i] = new TGraph(tpTempOut[i]->GetNbinsX(), xErr, yErr);
+				grTempOut[i]->SetTitle("errors associated to TProfile (to the left)");
+				grTempOut[i]->GetXaxis()->SetTitle(grVarName.c_str());
+				grTempOut[i]->GetYaxis()->SetTitle("error on output multiplicity from TProfile [urad]");
+				grTempOut[i]->SetLineColor(2);
+				grTempOut[i]->SetMarkerColor(2);
+				grTempOut[i]->Draw("A P L");
+				
+				k+=1;
+			}
+		}
+		canvas->Draw();
+		canvas->SaveAs(Form("%s%s.pdf", outPdfPath.c_str(), canvasName.c_str()));
+		canvas->Write();
+	}
 
 	// canvas, goniometer correlations of deflections
 	if(b_outTracking&&(b_h2_iStep_thDelta||b_h2_xGonio_thDelta)){

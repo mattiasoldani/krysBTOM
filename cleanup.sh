@@ -6,13 +6,14 @@
 SERVERPATH="$1"
 
 echo "cleaning server up from all latest output..."
-rm -f $SERVERPATH/outdata/outtext/*
-rm -f $SERVERPATH/outdata/outpdf/*
-rm -f $SERVERPATH/outdata/outfigs/*
-rm -f $SERVERPATH/outdata/outhist/*
+rm -f $SERVERPATH/outtext/*
+rm -f $SERVERPATH/outpdf/*
+rm -f $SERVERPATH/outfigs/*
+rm -f $SERVERPATH/outhist/*
+rm -f $SERVERPATH/outtree/*
 
 echo "also, creating empty/dummy info files to be displayed in the website..."
-touch $SERVERPATH/outdata/outtext/lsFilesAdv.conf
-echo "OM empty; ready for the next beamtest!" > $SERVERPATH/outdata/outtext/infoCycle.conf
+touch $SERVERPATH/outtext/lsFilesAdv.conf
+echo "OM empty; ready for the next beamtest!" > $SERVERPATH/outtext/infoCycle.conf
 
 echo "done"

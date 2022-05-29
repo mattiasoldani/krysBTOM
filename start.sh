@@ -7,7 +7,7 @@ FIRSTEXEC=1  # if 1 (0), first cycle is executed automatically at startup
 RUNSTRL=1  # filename part w/ run number, left index
 RUNSTRR=9  # filename part w/ run number, right index
 	
-TOSERVER=0  # if 1 (0), data are (not) sent to server on EOS
+TOSERVER=1  # if 1 (0), data are (not) sent to server on EOS
 SERVERPATH="$HOME/eos_sshfs_vm/www/krysBTOM"  # web server location on EOS (should be mounted via sshfs)
 SYNCBACKSERVER=1  # if 1, sync website back from server after sending data (subject to TOSERVER)
 	
